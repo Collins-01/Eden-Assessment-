@@ -17,7 +17,10 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -25,7 +28,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -43,16 +49,6 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBsSv__KwZ55n525l4JDcWLEBu9K8agzUg',
-    appId: '1:337118885560:web:ea33c8583d30a4c932664d',
-    messagingSenderId: '337118885560',
-    projectId: 'eden-assessment',
-    authDomain: 'eden-assessment.firebaseapp.com',
-    storageBucket: 'eden-assessment.appspot.com',
-    measurementId: 'G-DNBLXT7JCX',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCIZ_m5jnpWb98aHSrW7TprOYU5VhV2-ig',
     appId: '1:337118885560:android:50762af0ba5fce1532664d',
@@ -67,15 +63,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '337118885560',
     projectId: 'eden-assessment',
     storageBucket: 'eden-assessment.appspot.com',
+    iosClientId: '337118885560-4bhvsgruqj30a9ogsgtine9erpu73tp6.apps.googleusercontent.com',
     iosBundleId: 'com.example.edenDemo',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyDMSxMki9WUWH92HeiqvoEOY8Pi4FjXRF4',
-    appId: '1:337118885560:ios:667a8f6f7dbe1e7232664d',
-    messagingSenderId: '337118885560',
-    projectId: 'eden-assessment',
-    storageBucket: 'eden-assessment.appspot.com',
-    iosBundleId: 'com.example.edenDemo.RunnerTests',
   );
 }
