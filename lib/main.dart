@@ -19,10 +19,10 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: "Eden",
       theme: AppTheme.getTheme(),
-      initialRoute: RoutePaths.splashScreenView,
+      // initialRoute: RoutePaths.splashScreenView,
       navigatorKey: NavigationService.instance.navigatorKey,
       onGenerateRoute: AppRouter.generateRoute,
-      home: const SplashScreenView(),
+      home: const HomeView(),
     );
   }
 }
