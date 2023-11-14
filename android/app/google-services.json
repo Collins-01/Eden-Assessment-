@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "337118885560",
+    "project_id": "eden-assessment",
+    "storage_bucket": "eden-assessment.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:337118885560:android:50762af0ba5fce1532664d",
+        "android_client_info": {
+          "package_name": "com.example.eden_demo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "337118885560-2tbnop8dbtuna66j31cgtrdcu8668if5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIZ_m5jnpWb98aHSrW7TprOYU5VhV2-ig"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "337118885560-2tbnop8dbtuna66j31cgtrdcu8668if5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "337118885560-4bhvsgruqj30a9ogsgtine9erpu73tp6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.edenDemo"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
