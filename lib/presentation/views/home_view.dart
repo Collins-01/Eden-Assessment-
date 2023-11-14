@@ -2,6 +2,7 @@ import 'package:eden_demo/presentation/widgets/widgets.dart';
 import 'package:eden_demo/router/router.dart';
 import 'package:eden_demo/utils/app_colors.dart';
 import 'package:eden_demo/utils/sizing_config.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -13,6 +14,7 @@ class HomeView extends ConsumerStatefulWidget {
 }
 
 class _HomeViewState extends ConsumerState<HomeView> {
+  final _firebaseUser = FirebaseAuth.instance.currentUser;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +38,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
                   ),
                   Gap.w8,
                   Text(
-                    "Hello, Collins",
+                    "Hello, ${_firebaseUser?.displayName}",
                     style: Theme.of(context).textTheme.labelLarge,
                   ),
                   const Spacer(),

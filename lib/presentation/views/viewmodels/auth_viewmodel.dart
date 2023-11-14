@@ -1,3 +1,4 @@
+import 'package:eden_demo/core/data/data.dart';
 import 'package:eden_demo/presentation/states/states.dart';
 import 'package:eden_demo/router/router.dart';
 import 'package:eden_demo/utils/utils.dart';
@@ -11,7 +12,7 @@ class AuthViewModel extends BaseViewModel {
   signInWithGoogle() async {
     try {
       changeState(const ViewModelState.busy());
-      await Future.delayed(const Duration(seconds: 3));
+      final result = await ref.read(authRepository).signInWithGoogle();
       changeState(const ViewModelState.idle());
       NavigationService.instance.navigateTo(RoutePaths.homeView);
     } catch (e) {
