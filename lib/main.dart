@@ -30,7 +30,7 @@ class MainApp extends StatelessWidget {
       // initialRoute: RoutePaths.splashScreenView,
       navigatorKey: NavigationService.instance.navigatorKey,
       onGenerateRoute: AppRouter.generateRoute,
-      home: const HomeView(),
+      home: const AuthView(),
     );
   }
 }

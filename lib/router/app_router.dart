@@ -29,7 +29,10 @@ class AppRouter {
       case (RoutePaths.splashScreenView):
         return _getPageRoute(
             settings: settings, viewToShow: const SplashScreenView());
-
+      case (RoutePaths.authView):
+        return _getPageRoute(settings: settings, viewToShow: const AuthView());
+      case (RoutePaths.homeView):
+        return _getPageRoute(settings: settings, viewToShow: const HomeView());
       default:
         return _getPageRoute(
           settings: settings,

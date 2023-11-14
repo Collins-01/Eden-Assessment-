@@ -38,13 +38,10 @@ class _HomeViewState extends ConsumerState<HomeView> {
                     "Hello, Collins",
                     style: Theme.of(context).textTheme.labelLarge,
                   ),
-                  Spacer(),
-                  TextButton(
+                  const Spacer(),
+                  IconButton(
                     onPressed: () {},
-                    child: Text(
-                      "Logout",
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
+                    icon: const Icon(Icons.logout),
                   )
                 ],
               )
