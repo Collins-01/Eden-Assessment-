@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
+import 'package:eden_demo/core/models/data_models/order_status_model.dart';
+
 enum OrderType { instant, delayed }
 
 extension OrderTypeExtension on OrderType {
@@ -8,24 +10,11 @@ extension OrderTypeExtension on OrderType {
   bool get isDelayed => this == OrderType.delayed;
 }
 
-enum OrderStatus {
-  // ignore: constant_identifier_names
-  ORDER_PLACED,
-  // ignore: constant_identifier_names
-  ORDER_ACCEPTED,
-  // ignore: constant_identifier_names
-  ORDER_PICKUP_IN_PROGRESS,
-  // ignore: constant_identifier_names
-  ORDER_ARRIVED,
-  // ignore: constant_identifier_names
-  ORDER_DELIVERED,
-}
-
 class OrderModel {
   final String id;
   final OrderType orderType;
   final DateTime timestamp;
-  final OrderStatus status;
+  final OrderStatusModel status;
   OrderModel({
     required this.id,
     required this.orderType,
@@ -37,7 +26,7 @@ class OrderModel {
     String? id,
     OrderType? orderType,
     DateTime? timestamp,
-    OrderStatus? status,
+    OrderStatusModel? status,
   }) {
     return OrderModel(
       id: id ?? this.id,
@@ -50,20 +39,19 @@ class OrderModel {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
-      'orderType': orderType.name,
+      'orderType': orderType.isDelayed,
       'timestamp': timestamp.millisecondsSinceEpoch,
-      'status': status.name,
+      'status': status.toMap(),
     };
   }
 
   factory OrderModel.fromMap(Map<String, dynamic> map) {
     return OrderModel(
       id: map['id'] as String,
-      orderType: OrderType.instant,
-      // orderType: OrderType.fromMap(map['orderType'] as Map<String, dynamic>),
+      orderType: OrderType.delayed,
+      //  OrderType.fromMap(map['orderType'] as Map<String, dynamic>),
       timestamp: DateTime.fromMillisecondsSinceEpoch(map['timestamp'] as int),
-      // status: OrderStatus.fromMap(map['status'] as Map<String, dynamic>),
-      status: OrderStatus.ORDER_ACCEPTED,
+      status: OrderStatusModel.fromMap(map['status'] as Map<String, dynamic>),
     );
   }
 

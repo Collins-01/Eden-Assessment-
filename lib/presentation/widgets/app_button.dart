@@ -29,7 +29,10 @@ class AppButtonLong extends StatelessWidget {
           ),
           child: Text(
             title,
-            style: Theme.of(context).textTheme.bodyLarge,
+            style: Theme.of(context)
+                .textTheme
+                .bodyLarge
+                ?.copyWith(color: Colors.white),
           )),
     );
   }

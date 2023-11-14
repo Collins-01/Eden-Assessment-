@@ -1,3 +1,5 @@
+import 'package:eden_demo/core/models/models.dart';
+import 'package:eden_demo/presentation/views/orders_view.dart';
 import 'package:eden_demo/presentation/views/views.dart';
 import 'package:eden_demo/router/router.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +35,18 @@ class AppRouter {
         return _getPageRoute(settings: settings, viewToShow: const AuthView());
       case (RoutePaths.homeView):
         return _getPageRoute(settings: settings, viewToShow: const HomeView());
+      case (RoutePaths.ordersView):
+        return _getPageRoute(
+            settings: settings, viewToShow: const OrdersView());
+
+      case (RoutePaths.orderInfoView):
+        final order = routeArgs as OrderModel;
+
+        return _getPageRoute(
+            settings: settings,
+            viewToShow: OrderInfoView(
+              orderModel: order,
+            ));
       default:
         return _getPageRoute(
           settings: settings,

@@ -1,4 +1,5 @@
 import 'package:eden_demo/presentation/widgets/widgets.dart';
+import 'package:eden_demo/router/router.dart';
 import 'package:eden_demo/utils/app_colors.dart';
 import 'package:eden_demo/utils/sizing_config.dart';
 import 'package:flutter/material.dart';
@@ -44,6 +45,14 @@ class _HomeViewState extends ConsumerState<HomeView> {
                     icon: const Icon(Icons.logout),
                   )
                 ],
+              ),
+              Gap.h20,
+              AppButtonLong(
+                title: "Check Order",
+                onClick: () {
+                  print("Heyy");
+                  NavigationService.instance.navigateTo(RoutePaths.ordersView);
+                },
               )
             ],
           ),
