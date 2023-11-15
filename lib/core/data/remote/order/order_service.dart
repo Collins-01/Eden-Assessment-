@@ -71,6 +71,15 @@ class OrderServiceImpl implements OrderService {
     /// Look for the order by id
     /// implement the update activity
   }
+
+  @override
+  Stream<OrderModel?> watchOrder(String id) async* {
+    final value = _ordersList.asyncMap((orders) async {
+      var matchingItems = orders.where((element) => element.id == id).toList();
+      return matchingItems.isNotEmpty ? matchingItems.first : null;
+    });
+    yield* value;
+  }
 }
 
 final orderService = Provider<OrderService>((ref) {

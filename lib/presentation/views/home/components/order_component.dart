@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:eden_demo/presentation/views/views.dart';
 import 'package:flutter/material.dart';
 
 import 'package:eden_demo/core/models/models.dart';
@@ -17,9 +18,10 @@ class OrderComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => NavigationService.instance.navigateTo(
-        RoutePaths.homeView,
-        argument: {RouteArgumentKeys.order: order},
+      onTap: () => Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) => OrderInfoView(orderModel: order),
+        ),
       ),
       child: Container(
         alignment: Alignment.centerLeft,
@@ -33,14 +35,12 @@ class OrderComponent extends StatelessWidget {
           ),
         ),
         child: Row(children: [
-          Container(
+          AppNetworkImage(
             height: 80,
             width: 80,
-            decoration: const BoxDecoration(
-              color: Colors.blue,
-              borderRadius: BorderRadius.all(
-                Radius.circular(12),
-              ),
+            url: order.items[0].image,
+            borderRadius: const BorderRadius.all(
+              Radius.circular(12),
             ),
           ),
           Gap.w10,
@@ -58,12 +58,14 @@ class OrderComponent extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               Gap.h6,
+              Text("QTY: ${order.items.length}"),
+              Gap.h6,
               Text(
                 "Status : ${order.statusList.last.status}",
                 style: Theme.of(context).textTheme.bodySmall!.copyWith(
                       color: Colors.green,
                     ),
-              )
+              ),
             ],
           )
         ]),

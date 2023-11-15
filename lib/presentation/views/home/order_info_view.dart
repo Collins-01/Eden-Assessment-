@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:eden_demo/core/data/data.dart';
 import 'package:eden_demo/extensions/extensions.dart';
 import 'package:eden_demo/presentation/widgets/widgets.dart';
 import 'package:eden_demo/router/router.dart';
@@ -22,36 +23,55 @@ class _OrderInfoViewState extends ConsumerState<OrderInfoView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(
-              bottom: context.deviceHeightPercentage(percentage: 8),
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                IconButton(
-                  onPressed: () => NavigationService.instance.goBack(),
-                  icon: const Icon(Icons.arrow_back),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(
+                  bottom: context.deviceHeightPercentage(percentage: 8),
                 ),
-                Gap.w20,
-                Text(
-                  "Order Details",
-                  style: Theme.of(context).textTheme.bodyMedium,
-                )
-              ],
-            ),
-          ),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [],
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      onPressed: () => NavigationService.instance.goBack(),
+                      icon: const Icon(Icons.arrow_back),
+                    ),
+                    Gap.w20,
+                    Text(
+                      "Order Details",
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    )
+                  ],
+                ),
               ),
-            ),
-          )
-        ],
+              Expanded(
+                child: StreamBuilder<OrderModel?>(
+                  stream: ref
+                      .watch(orderRepository)
+                      .watchOrder(widget.orderModel.id),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    }
+
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressIndicator();
+                    }
+                    final data = snapshot.data;
+                    if (data == null) {
+                      return Text("Nothing...");
+                    }
+                    return Text(data.price.toString());
+                  },
+                ),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }

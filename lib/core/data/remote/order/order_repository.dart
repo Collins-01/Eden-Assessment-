@@ -13,6 +13,11 @@ class OrderRepositoryImpl implements OrderRepository {
   Future<void> updateOrder(String id) async {
     return await orderService.updateOrder(id);
   }
+
+  @override
+  Stream<OrderModel?> watchOrder(String id) async* {
+    yield* orderService.watchOrder(id);
+  }
 }
 
 final orderRepository = Provider<OrderRepository>((ref) {

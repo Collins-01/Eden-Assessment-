@@ -6,6 +6,7 @@ abstract class OrderInterface {
 
   /// Update an order by its ID
   Future<void> updateOrder(String id);
+  Stream<OrderModel?> watchOrder(String id);
 }
 
 abstract class OrderService implements OrderInterface {}
