@@ -5,21 +5,25 @@ class User {
   final String id;
   final String name;
   final String email;
+  final String? image;
   User({
     required this.id,
     required this.name,
     required this.email,
+    required this.image,
   });
 
   User copyWith({
     String? id,
     String? name,
     String? email,
+    String? image,
   }) {
     return User(
       id: id ?? this.id,
       name: name ?? this.name,
       email: email ?? this.email,
+      image: image ?? this.image,
     );
   }
 
@@ -28,6 +32,7 @@ class User {
       'id': id,
       'name': name,
       'email': email,
+      'image': image,
     };
   }
 
@@ -36,6 +41,7 @@ class User {
       id: map['id'] as String,
       name: map['name'] as String,
       email: map['email'] as String,
+      image: map['image'] != null ? map['image'] as String : null,
     );
   }
 
@@ -45,15 +51,22 @@ class User {
       User.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
-  String toString() => 'User(id: $id, name: $name, email: $email)';
+  String toString() {
+    return 'User(id: $id, name: $name, email: $email, image: $image)';
+  }
 
   @override
   bool operator ==(covariant User other) {
     if (identical(this, other)) return true;
 
-    return other.id == id && other.name == name && other.email == email;
+    return other.id == id &&
+        other.name == name &&
+        other.email == email &&
+        other.image == image;
   }
 
   @override
-  int get hashCode => id.hashCode ^ name.hashCode ^ email.hashCode;
+  int get hashCode {
+    return id.hashCode ^ name.hashCode ^ email.hashCode ^ image.hashCode;
+  }
 }

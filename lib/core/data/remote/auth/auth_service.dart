@@ -25,16 +25,6 @@ class AuthServiceImpl implements AuthService {
   @override
   Future<GoogleSignInResponseModel> signInWithGoogle() async {
     try {
-      // GoogleSignIn _googleSignIn = GoogleSignIn(
-      //   scopes: [
-      //     'email',
-      //     'https://www.googleapis.com/auth/contacts.readonly',
-      //   ],
-      // );
-      // final ressult = await _googleSignIn.signIn();
-      // _logger.d(
-      //     "Google SignIn ressponse:${ressult?.displayName}, ${ressult?.email} ");
-
       final GoogleSignInAccount? googleSignInAccount =
           await _googleSignIn.signIn();
       final GoogleSignInAuthentication googleSignInAuthentication =

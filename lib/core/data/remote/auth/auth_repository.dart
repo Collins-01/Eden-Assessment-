@@ -7,9 +7,8 @@ class AuthRepositoryImpl implements AuthRepository {
   final AuthService _authService;
   AuthRepositoryImpl(this._authService);
   @override
-  Future<void> logOut() {
-    // TODO: implement logOut
-    throw UnimplementedError();
+  Future<void> logOut() async {
+    return await _authService.logOut();
   }
 
   @override
