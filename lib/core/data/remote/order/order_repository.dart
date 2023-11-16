@@ -10,11 +10,6 @@ class OrderRepositoryImpl implements OrderRepository {
   Stream<List<OrderModel>> get orders => orderService.orders;
 
   @override
-  Future<void> updateOrder(String id) async {
-    return await orderService.updateOrder(id);
-  }
-
-  @override
   Stream<OrderModel?> watchOrder(String id) async* {
     yield* orderService.watchOrder(id);
   }

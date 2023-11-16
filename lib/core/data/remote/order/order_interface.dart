@@ -4,8 +4,7 @@ abstract class OrderInterface {
   /// Get all orders as a stream
   Stream<List<OrderModel>> get orders;
 
-  /// Update an order by its ID
-  Future<void> updateOrder(String id);
+  /// Watch an order by its id
   Stream<OrderModel?> watchOrder(String id);
 }
 

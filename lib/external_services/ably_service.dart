@@ -4,8 +4,6 @@ import 'package:eden_demo/constants/constants.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AblyService {
-  // ignore: non_constant_identifier_names
-  String ORDERS_CHANNEL = 'ORDER';
   final ClientOptions _clientOptions = ClientOptions(
     key: Keys.ablyKey,
   );

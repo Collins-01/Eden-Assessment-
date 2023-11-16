@@ -60,7 +60,7 @@ class OrderComponent extends StatelessWidget {
               Text("QTY: ${order.items.length}"),
               Gap.h6,
               Text(
-                "Status : ${OrderStatusModel.getOrderStatusString(order.statusList.last.status)}",
+                "Status : ${OrderStatusModel.statusToString(order.statusList.last.status)}",
                 style: Theme.of(context).textTheme.bodySmall!.copyWith(
                       color: Colors.green,
                     ),

@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:eden_demo/core/data/data.dart';
-import 'package:eden_demo/presentation/widgets/widgets.dart';
 import 'package:eden_demo/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
