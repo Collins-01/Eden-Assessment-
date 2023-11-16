@@ -47,7 +47,7 @@ class AppWrapper extends ConsumerWidget {
     return ValueListenableBuilder(
       valueListenable: userDomain.currentUser,
       builder: (context, value, child) {
-        print("Current Value from wrapper ::: ${value?.email}");
+        // print("Current Value from wrapper ::: ${value?.email}");
         if (value == null) {
           return const AuthView();
         } else {

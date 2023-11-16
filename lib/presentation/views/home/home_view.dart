@@ -62,7 +62,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
                   )
                 ],
               ),
-              // Gap.h20,
+              Gap.h20,
               Expanded(
                 child: StreamBuilder(
                   stream: vm.ordersStream,
@@ -74,11 +74,9 @@ class _HomeViewState extends ConsumerState<HomeView> {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const CircularProgressIndicator();
                     }
-
                     List<OrderModel> orders = snapshot.data ?? [];
                     return ListView.builder(
                       // Show messages from bottom to top
-                      reverse: true,
                       itemCount: orders.length,
                       itemBuilder: (context, index) {
                         final order = orders[index];

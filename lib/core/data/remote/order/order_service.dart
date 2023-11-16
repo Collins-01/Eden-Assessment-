@@ -1,24 +1,33 @@
 import 'dart:async';
 
+import 'package:ably_flutter/ably_flutter.dart';
 import 'package:eden_demo/core/data/data.dart';
 import 'package:eden_demo/core/models/models.dart';
+import 'package:eden_demo/external_services/external_service.dart';
+import 'package:eden_demo/utils/utils.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:uuid/uuid.dart';
 
 class OrderServiceImpl implements OrderService {
+  final _logger = appLogger(OrderServiceImpl);
+  // ignore: non_constant_identifier_names
+  String ORDERS_CHANNEL = 'orders';
+  final AblyService ablyService;
   final _uuid = const Uuid();
   final _faker = Faker();
   List<OrderModel> _list = [];
   Timer? _timer;
   final BehaviorSubject<List<OrderModel>> _ordersList =
       BehaviorSubject.seeded([]);
-  OrderServiceImpl() {
+  OrderServiceImpl(this.ablyService) {
+    /// Initialize the ably service
+    ablyService.init();
     _list = [
       OrderModel(
         price: 10000.00,
-        id: '1',
+        id: '2',
         orderType: OrderType.instant,
         timestamp: DateTime.now(),
         statusList: [
@@ -43,25 +52,39 @@ class OrderServiceImpl implements OrderService {
       )
     ];
     _ordersList.sink.add(_list);
-    _timer = Timer.periodic(const Duration(seconds: 2), (timer) {
-      final currentOrders = _ordersList.value;
-      final updatedOrders = currentOrders.map((order) {
-        if (order.id == '1') {
-          return OrderModel(
-            id: order.id,
-            orderType: order.orderType,
-            timestamp: order.timestamp,
-            items: order.items,
-            statusList: order.statusList,
-            price: order.price + 100,
-          );
-        } else {
-          return order;
-        }
-      }).toList();
-      _ordersList.add(updatedOrders);
+    ablyService.connection.listen((event) {
+      _logger.d("Connecttion Status ::: ${event.current.name}");
+    });
+    ablyService.channel(ORDERS_CHANNEL).publish(
+          name: 'new_order',
+          message: Message(
+            data: _list[0].toMap(),
+          ),
+        );
+
+    // ablyService.channel(ORDERS_CHANNEL).history();
+    ablyService
+        .channel(ORDERS_CHANNEL)
+        .subscribe(
+          name: 'new_order',
+          // names: [],
+        )
+        .listen(
+      (event) {
+        _logger.d("New Data::: ${event.data}");
+        _logger.d("New Name::: ${event.name}");
+      },
+    );
+    ablyService
+        .channel(ORDERS_CHANNEL)
+        .presence
+        .subscribe(action: PresenceAction.enter)
+        .listen((event) {
+      _logger.d("Presence Action Data::::: ${event.data} ");
     });
   }
+
+  Future _seed() async {}
 
   @override
   Stream<List<OrderModel>> get orders => _ordersList.asBroadcastStream();
@@ -83,5 +106,5 @@ class OrderServiceImpl implements OrderService {
 }
 
 final orderService = Provider<OrderService>((ref) {
-  return OrderServiceImpl();
+  return OrderServiceImpl(ref.read(ablyServiceProvider));
 });

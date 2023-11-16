@@ -5,7 +5,6 @@ import 'package:eden_demo/presentation/widgets/widgets.dart';
 import 'package:eden_demo/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:eden_demo/core/models/models.dart';
 
 class OrderInfoView extends ConsumerStatefulWidget {
@@ -30,8 +29,8 @@ class _OrderInfoViewState extends ConsumerState<OrderInfoView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: EdgeInsets.only(
-                  bottom: context.deviceHeightPercentage(percentage: 8),
+                padding: const EdgeInsets.only(
+                  bottom: 10,
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -43,7 +42,7 @@ class _OrderInfoViewState extends ConsumerState<OrderInfoView> {
                     Gap.w20,
                     Text(
                       "Order Details",
-                      style: Theme.of(context).textTheme.bodyMedium,
+                      style: Theme.of(context).textTheme.headlineSmall,
                     )
                   ],
                 ),
@@ -63,9 +62,52 @@ class _OrderInfoViewState extends ConsumerState<OrderInfoView> {
                     }
                     final data = snapshot.data;
                     if (data == null) {
-                      return Text("Nothing...");
+                      return Text(
+                        "Order not found",
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      );
                     }
-                    return Text(data.price.toString());
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        InkWell(
+                          onTap: () => showModalBottomSheet(
+                            context: context,
+                            builder: (context) {
+                              return ClipRRect(
+                                clipBehavior: Clip.hardEdge,
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(20),
+                                  topRight: Radius.circular(20),
+                                ),
+                                child: Container(
+                                  height: 500,
+                                  width: context.getDeviceWidth,
+                                  decoration: const BoxDecoration(
+                                    color: Colors.blue,
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(20),
+                                      topRight: Radius.circular(20),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                          child: Container(
+                            height:
+                                context.deviceHeightPercentage(percentage: 17),
+                            width: context.getDeviceWidth,
+                            decoration: const BoxDecoration(
+                              color: Colors.green,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(12),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
                   },
                 ),
               )
