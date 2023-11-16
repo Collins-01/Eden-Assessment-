@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:eden_demo/core/models/models.dart';
 import 'package:eden_demo/extensions/extensions.dart';
 import 'package:eden_demo/presentation/widgets/widgets.dart';
-import 'package:eden_demo/router/router.dart';
 import 'package:eden_demo/utils/utils.dart';
 
 class OrderComponent extends StatelessWidget {
@@ -20,7 +19,7 @@ class OrderComponent extends StatelessWidget {
     return InkWell(
       onTap: () => Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (_) => OrderInfoView(orderModel: order),
+          builder: (_) => OrderInfoView(id: order.id),
         ),
       ),
       child: Container(
@@ -49,7 +48,7 @@ class OrderComponent extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                "Rice and Salad",
+                order.items[0].name,
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
               Gap.h8,
@@ -61,7 +60,7 @@ class OrderComponent extends StatelessWidget {
               Text("QTY: ${order.items.length}"),
               Gap.h6,
               Text(
-                "Status : ${order.statusList.last.status}",
+                "Status : ${OrderStatusModel.getOrderStatusString(order.statusList.last.status)}",
                 style: Theme.of(context).textTheme.bodySmall!.copyWith(
                       color: Colors.green,
                     ),

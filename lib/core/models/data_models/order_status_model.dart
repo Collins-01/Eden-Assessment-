@@ -14,12 +14,21 @@ enum OrderStatus {
   ORDER_DELIVERED,
 }
 
+extension OrderStatusExtension on OrderStatus {
+  bool get isOrderPlaced => this == OrderStatus.ORDER_PLACED;
+  bool get isOrderAccepted => this == OrderStatus.ORDER_ACCEPTED;
+  bool get isOrderPickupInProgress =>
+      this == OrderStatus.ORDER_PICKUP_IN_PROGRESS;
+  bool get isOrderArrived => this == OrderStatus.ORDER_ARRIVED;
+  bool get isOrderDelivered => this == OrderStatus.ORDER_DELIVERED;
+}
+
 class OrderStatusModel {
   final OrderStatus status;
-  final DateTime timestamp;
+  late final DateTime? timestamp;
   OrderStatusModel({
     required this.status,
-    required this.timestamp,
+    this.timestamp,
   });
 
   OrderStatusModel copyWith({
@@ -32,18 +41,41 @@ class OrderStatusModel {
     );
   }
 
+  static String getOrderStatusString(OrderStatus status) {
+    switch (status) {
+      case OrderStatus.ORDER_PLACED:
+        return "Placed";
+
+      case OrderStatus.ORDER_ACCEPTED:
+        return "Accepted";
+      case OrderStatus.ORDER_PICKUP_IN_PROGRESS:
+        return "Pickup In Progress";
+
+      case OrderStatus.ORDER_ARRIVED:
+        return "Arrived";
+
+      case OrderStatus.ORDER_DELIVERED:
+        return "Delivered";
+    }
+  }
+
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'status': status.name,
-      'timestamp': timestamp.millisecondsSinceEpoch,
+      'timestamp': timestamp?.millisecondsSinceEpoch,
     };
+  }
+
+  static OrderStatus _getStatus(String value) {
+    return OrderStatus.ORDER_ACCEPTED;
   }
 
   factory OrderStatusModel.fromMap(Map<String, dynamic> map) {
     return OrderStatusModel(
-      status: OrderStatus.ORDER_ACCEPTED,
-      // OrderStatus.fromMap(map['status'] as Map<String, dynamic>),
-      timestamp: DateTime.fromMillisecondsSinceEpoch(map['timestamp'] as int),
+      status: _getStatus(map['status']),
+      timestamp: map['timestamp'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(map['timestamp'] as int)
+          : null,
     );
   }
 

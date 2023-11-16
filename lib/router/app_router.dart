@@ -40,11 +40,11 @@ class AppRouter {
         // final args = {
         //   RouteArgumentKeys.order:
         // };
-        final order = settings.arguments as OrderModel;
+        final id = settings.arguments as String;
         return _getPageRoute(
             settings: settings,
             viewToShow: OrderInfoView(
-              orderModel: order,
+              id: id,
             ));
       default:
         return _getPageRoute(
