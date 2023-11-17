@@ -1,5 +1,6 @@
 import 'package:eden_demo/core/data/data.dart';
 import 'package:eden_demo/core/models/models.dart';
+import 'package:eden_demo/router/router.dart';
 import 'package:eden_demo/utils/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb;
 // import 'package:flutter/foundation.dart';
@@ -35,6 +36,7 @@ class UserDomain {
     _ref.read(authRepository).logOut();
     await Future.delayed(const Duration(milliseconds: 200));
     _currentUserSubject.add(null);
+    NavigationService.instance.navigateToReplaceAll(RoutePaths.appWrapperView);
     // _currentUser.value = null;
   }
 

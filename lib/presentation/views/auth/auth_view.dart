@@ -22,9 +22,10 @@ class AuthView extends ConsumerWidget {
               // mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Gap.h(context.deviceHeightPercentage(percentage: 9)),
                 AppText.heading3("Hey there!, SignIn to continue..."),
                 Gap.h(
-                  context.deviceHeightPercentage(percentage: 40),
+                  context.deviceHeightPercentage(percentage: 30),
                 ),
                 AuthButton(
                   title: "Continue with Google",

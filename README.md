@@ -62,3 +62,6 @@ To view the realtime updates, restart the application, and click on the first or
 
 ## Screenshots
 
+![Screenshot 1](screenshots/image01.jpg)
+![Screenshot 2](screenshots/image02.jpg)
+![Screenshot 3](screenshots/image03.jpg)
