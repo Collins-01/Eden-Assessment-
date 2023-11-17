@@ -131,7 +131,7 @@ class OrderServiceImpl implements OrderService {
             status: OrderStatus.ORDER_ON_THE_WAY,
           ),
           OrderStatusModel(
-            status: OrderStatus.ORDER_DELIVERED,
+            status: OrderStatus.ORDER_ARRIVED,
           ),
           OrderStatusModel(
             status: OrderStatus.ORDER_DELIVERED,
@@ -148,7 +148,45 @@ class OrderServiceImpl implements OrderService {
             ),
           )
         ],
-      )
+      ),
+      OrderModel(
+        price: 10000.00,
+        id: '3',
+        orderType: OrderType.instant,
+        timestamp: DateTime.now(),
+        statusList: [
+          OrderStatusModel(
+            status: OrderStatus.ORDER_PLACED,
+            timestamp: DateTime.now(),
+          ),
+          OrderStatusModel(
+            status: OrderStatus.ORDER_ACCEPTED,
+          ),
+          OrderStatusModel(
+            status: OrderStatus.ORDER_PICKUP_IN_PROGRESS,
+          ),
+          OrderStatusModel(
+            status: OrderStatus.ORDER_ON_THE_WAY,
+          ),
+          OrderStatusModel(
+            status: OrderStatus.ORDER_ARRIVED,
+          ),
+          OrderStatusModel(
+            status: OrderStatus.ORDER_DELIVERED,
+          ),
+        ],
+        items: [
+          ...List.generate(
+            3,
+            (index) => OrderItemModel(
+              id: _uuid.v4(),
+              name: _faker.food.dish(),
+              price: 200,
+              image: _faker.image.image(),
+            ),
+          )
+        ],
+      ),
     ];
     _ordersList.sink.add(_list);
   }

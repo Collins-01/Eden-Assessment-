@@ -9,6 +9,7 @@ class AppTheme {
     return base.copyWith(
       primaryColor: AppColors.primaryColor,
       scaffoldBackgroundColor: AppColors.screenColor,
+
       // primaryColor: const Color(0x00ff5a5f),
       // primaryColorDark: const Color(0xFF333333),
       // appBarTheme: base.appBarTheme.copyWith(

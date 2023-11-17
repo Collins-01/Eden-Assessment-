@@ -49,27 +49,30 @@ class AppNetworkImage extends StatelessWidget {
         ),
       );
     }
-    return Container(
-      height: height,
-      width: width,
-      decoration: BoxDecoration(
-        shape: BoxShape.rectangle,
-        borderRadius: borderRadius,
-      ),
-      child: CachedNetworkImage(
-        imageUrl: url,
-        errorWidget: (context, url, error) => const Icon(Icons.error),
-        fit: fit ?? BoxFit.cover,
-        placeholder: (context, url) => Center(
-          child: Shimmer.fromColors(
-            baseColor: Colors.grey.withOpacity(.2),
-            highlightColor: Colors.grey.withOpacity(.5),
-            child: Container(
-              height: height,
-              width: width,
-              decoration: const BoxDecoration(
-                shape: BoxShape.rectangle,
-                color: Colors.white,
+    return ClipRRect(
+      borderRadius: borderRadius ?? BorderRadius.zero,
+      child: Container(
+        height: height,
+        width: width,
+        decoration: BoxDecoration(
+          shape: BoxShape.rectangle,
+          borderRadius: borderRadius,
+        ),
+        child: CachedNetworkImage(
+          imageUrl: url,
+          errorWidget: (context, url, error) => const Icon(Icons.error),
+          fit: fit ?? BoxFit.cover,
+          placeholder: (context, url) => Center(
+            child: Shimmer.fromColors(
+              baseColor: Colors.grey.withOpacity(.2),
+              highlightColor: Colors.grey.withOpacity(.5),
+              child: Container(
+                height: height,
+                width: width,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  color: Colors.white,
+                ),
               ),
             ),
           ),

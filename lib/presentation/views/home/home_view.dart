@@ -42,12 +42,8 @@ class _HomeViewState extends ConsumerState<HomeView> {
                               width: 30,
                             ),
                             Gap.w8,
-                            Text(
+                            AppText.heading4(
                               "Hello, ${user?.name.split(" ")[0].capitalizeFirst}",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .copyWith(fontWeight: FontWeight.w700),
                             ),
                           ],
                         );
@@ -63,6 +59,10 @@ class _HomeViewState extends ConsumerState<HomeView> {
                 ],
               ),
               Gap.h20,
+              AppText.heading5(
+                "Order History",
+              ),
+              Gap.h20,
               Expanded(
                 child: StreamBuilder(
                   stream: vm.ordersStream,
@@ -75,7 +75,10 @@ class _HomeViewState extends ConsumerState<HomeView> {
                       return const CircularProgressIndicator();
                     }
                     List<OrderModel> orders = snapshot.data ?? [];
-                    return ListView.builder(
+                    return ListView.separated(
+                      separatorBuilder: (_, __) => const Divider(
+                        height: 2,
+                      ),
                       // Show messages from bottom to top
                       itemCount: orders.length,
                       itemBuilder: (context, index) {
