@@ -55,18 +55,20 @@ class OrderServiceImpl implements OrderService {
       //If there is a newtork connection, publish the status of the order
       // && _currentStatusIndex < _listOfStatus.length
       if (_isConnected) {
-        _currentStatusIndex = _currentStatusIndex + 1;
-        _logger.d("_currentStatusIndex:: $_currentStatusIndex");
-        final time = DateTime.now().add(const Duration(seconds: 3));
-        await ablyService
-            .channel(ORDERS_CHANNEL)
-            .publish(name: NEW_STATUS, data: {
-          'id': '2',
-          'status': _listOfStatus[_currentStatusIndex].name,
-          'timestamp': time.toString(),
-        });
-      } else {
-        _timer?.cancel();
+        if (_currentStatusIndex < _listOfStatus.length) {
+          _currentStatusIndex = _currentStatusIndex + 1;
+          _logger.d("_currentStatusIndex:: $_currentStatusIndex");
+          final time = DateTime.now().add(const Duration(seconds: 3));
+          await ablyService
+              .channel(ORDERS_CHANNEL)
+              .publish(name: NEW_STATUS, data: {
+            'id': '2',
+            'status': _listOfStatus[_currentStatusIndex].name,
+            'timestamp': time.toString(),
+          });
+        } else {
+          _timer?.cancel();
+        }
       }
     });
 
