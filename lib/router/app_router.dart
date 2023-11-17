@@ -1,5 +1,6 @@
 import 'package:eden_demo/core/models/models.dart';
 import 'package:eden_demo/presentation/views/views.dart';
+import 'package:eden_demo/presentation/widgets/widgets.dart';
 import 'package:eden_demo/router/router.dart';
 import 'package:flutter/material.dart';
 
@@ -34,6 +35,9 @@ class AppRouter {
         return _getPageRoute(settings: settings, viewToShow: const AuthView());
       case (RoutePaths.homeView):
         return _getPageRoute(settings: settings, viewToShow: const HomeView());
+      case (RoutePaths.appWrapperView):
+        return _getPageRoute(
+            settings: settings, viewToShow: const AppWrapper());
 
       case (RoutePaths.orderInfoView):
 
@@ -49,7 +53,11 @@ class AppRouter {
       default:
         return _getPageRoute(
           settings: settings,
-          viewToShow: const Scaffold(),
+          viewToShow: Scaffold(
+            body: Center(
+              child: AppText.heading5("Route Not Found"),
+            ),
+          ),
         );
     }
   }

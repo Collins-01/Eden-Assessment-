@@ -1,6 +1,6 @@
 import 'package:eden_demo/presentation/views/auth/viewmodels/auth_viewmodel.dart';
 import 'package:eden_demo/presentation/widgets/widgets.dart';
-import 'package:eden_demo/utils/sizing_config.dart';
+import 'package:eden_demo/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -25,10 +25,10 @@ class AuthView extends ConsumerWidget {
                   callback: () => vm.signInWithGoogle(),
                 ),
                 Gap.h10,
-                AuthButton(
-                  title: "Continue with Github",
-                  callback: () => print("object"),
-                ),
+                // AuthButton(
+                //   title: "Continue with Github",
+                //   callback: () => vm.signInWithGithub(),
+                // ),
               ],
             ),
           ),

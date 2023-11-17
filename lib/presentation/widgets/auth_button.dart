@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:eden_demo/presentation/widgets/widgets.dart';
+import 'package:eden_demo/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 import 'package:eden_demo/extensions/extensions.dart';
@@ -26,9 +28,9 @@ class AuthButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             //
-            Text(
+            AppText.button(
               title,
-              style: Theme.of(context).textTheme.bodyMedium,
+              color: AppColors.darkColor,
             ),
           ],
         ),

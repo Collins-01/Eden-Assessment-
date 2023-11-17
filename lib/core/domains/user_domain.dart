@@ -2,8 +2,9 @@ import 'package:eden_demo/core/data/data.dart';
 import 'package:eden_demo/core/models/models.dart';
 import 'package:eden_demo/utils/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb;
-import 'package:flutter/foundation.dart';
+// import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rxdart/rxdart.dart';
 
 class UserDomain {
   final Ref _ref;
@@ -11,8 +12,8 @@ class UserDomain {
   UserDomain(this._ref) {
     _init();
   }
-  // final BehaviourSubject<User?> _currentUserSubject =
-  //     BehaviourSubject.seeded(null);
+  final BehaviorSubject<User?> _currentUserSubject =
+      BehaviorSubject.seeded(null);
   _init() async {
     final r = fb.FirebaseAuth.instance.authStateChanges();
     r.listen((event) {
@@ -24,7 +25,8 @@ class UserDomain {
           email: event.email!,
           image: event.photoURL,
         );
-        _currentUser.value = u;
+        _currentUserSubject.add(u);
+        // _currentUser.value = u;
       }
     });
   }
@@ -32,11 +34,14 @@ class UserDomain {
   logOut() async {
     _ref.read(authRepository).logOut();
     await Future.delayed(const Duration(milliseconds: 200));
-    _currentUser.value = null;
+    _currentUserSubject.add(null);
+    // _currentUser.value = null;
   }
 
-  final ValueNotifier<User?> _currentUser = ValueNotifier(null);
-  ValueNotifier<User?> get currentUser => _currentUser;
+  Stream<User?> get currentUserStream => _currentUserSubject.stream;
+
+  // final ValueNotifier<User?> _currentUser = ValueNotifier(null);
+  // ValueNotifier<User?> get currentUser => _currentUser;
 }
 
 final userDomainProvider = Provider<UserDomain>((ref) {

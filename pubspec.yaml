@@ -7,23 +7,23 @@ environment:
   sdk: '>=3.1.5 <4.0.0'
 
 dependencies:
-  ably_flutter: ^1.2.23
-  cached_network_image: ^3.3.0
-  faker: ^2.1.0
-  firebase_auth: ^4.13.0
-  firebase_core: ^2.22.0
+  ably_flutter: ^1.2.23 #ably plugin for flutter
+  cached_network_image: ^3.3.0 #used for caching network images
+  faker: ^2.1.0 #used for generating fake data
+  firebase_auth: ^4.13.0 #used for firebase authentication
+  firebase_core: ^2.22.0 #used to connect with firebase, and perform firebase operations
   flutter:
     sdk: flutter
-  flutter_riverpod: ^2.4.6
-  freezed_annotation: ^2.4.1
-  google_fonts: ^6.1.0
-  google_sign_in: ^6.1.6
-  intl: ^0.18.1
-  rxdart: ^0.27.7
-  shimmer: ^3.0.0
-  timeago: ^3.6.0
-  timeline_tile: ^2.0.0
-  uuid: ^4.2.1
+  flutter_riverpod: ^2.4.6  # used to state management and dependency injection
+  freezed_annotation: ^2.4.1 #used to generate free annotations
+  google_fonts: ^6.1.0 #used for fonts styling
+  google_sign_in: ^6.1.6 #used for google sign in
+  intl: ^0.18.1 #used to format currency
+  rxdart: ^0.27.7 #used realtime operations in dart, just like the native streams, but possess more fuctionalities
+  shimmer: ^3.0.0 #used to indicate the loading process of items
+  timeago: ^3.6.0 # used to check how long an activity occurred
+  timeline_tile: ^2.0.0 # used to sty;e timelines in the app
+
 
 dev_dependencies:
   flutter_test:

@@ -1,4 +1,5 @@
 import 'package:eden_demo/core/data/data.dart';
+import 'package:eden_demo/core/errors/errors.dart';
 import 'package:eden_demo/utils/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -39,7 +40,7 @@ class AuthServiceImpl implements AuthService {
       return GoogleSignInResponseModel();
     } catch (e) {
       _logger.e("Error Signing in with Google ::: ${e.toString()}");
-      return GoogleSignInResponseModel();
+      throw CustomError('Unknown Error', e.toString());
     }
   }
 }
