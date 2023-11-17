@@ -1,4 +1,4 @@
-export './home_view.dart';
-export './order_info_view.dart';
+export 'home/home_view.dart';
+export 'home/order_info_view.dart';
 export './splash_screen_view.dart';
-export './auth_view.dart';
+export 'auth/auth_view.dart';

@@ -1,4 +1,4 @@
-import 'package:eden_demo/presentation/views/viewmodels/auth_viewmodel.dart';
+import 'package:eden_demo/presentation/views/auth/viewmodels/auth_viewmodel.dart';
 import 'package:eden_demo/presentation/widgets/widgets.dart';
 import 'package:eden_demo/utils/sizing_config.dart';
 import 'package:flutter/material.dart';
