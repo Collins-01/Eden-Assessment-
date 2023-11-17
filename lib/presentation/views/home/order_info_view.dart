@@ -82,7 +82,7 @@ class OrderInfoView extends ConsumerWidget {
                       children: [
                         AppText.body1("Price"),
                         AppText.heading4(
-                          "\$1500",
+                          "\$${snapshot.data?.totalPrice() ?? "0.00"}",
                         ),
                         Gap.h12,
                         Row(
@@ -94,7 +94,11 @@ class OrderInfoView extends ConsumerWidget {
                               children: [
                                 AppText.caption("Items"),
                                 AppText.body1(
-                                  "1200",
+                                  snapshot.data?.items
+                                          .fold(0.0,
+                                              (sum, item) => sum + item.price)
+                                          .toString() ??
+                                      "0.00",
                                 ),
                               ],
                             ),
@@ -103,7 +107,8 @@ class OrderInfoView extends ConsumerWidget {
                               children: [
                                 AppText.caption("Delivery"),
                                 AppText.body1(
-                                  "1200",
+                                  snapshot.data?.deliveryFee.toString() ??
+                                      "0.00",
                                 ),
                               ],
                             ),
@@ -112,8 +117,8 @@ class OrderInfoView extends ConsumerWidget {
                               children: [
                                 AppText.caption("Packaging"),
                                 AppText.body1(
-                                  "1200",
-                                ),
+                                    snapshot.data?.packagingFee.toString() ??
+                                        "0.00"),
                               ],
                             )
                           ],
@@ -137,7 +142,8 @@ class OrderInfoView extends ConsumerWidget {
                             padding: const EdgeInsets.only(top: 10),
                             child: AppText.caption(
                               OrderStatusModel.statusToString(
-                                  data.statusList[index].status),
+                                data.statusList[index].status,
+                              ),
                             ),
                           ),
                           axis: TimelineAxis.horizontal,

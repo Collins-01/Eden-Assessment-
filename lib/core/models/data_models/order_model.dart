@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
+
 import 'package:eden_demo/core/models/data_models/order_item_model.dart';
 import 'package:eden_demo/core/models/data_models/order_status_model.dart';
 
@@ -17,23 +19,35 @@ class OrderModel {
   final DateTime timestamp;
   final List<OrderItemModel> items;
   final List<OrderStatusModel> statusList;
+  final double deliveryFee;
+  final double packagingFee;
   // final int quantity;
   final double price;
-  OrderModel({
-    required this.id,
-    required this.orderType,
-    required this.timestamp,
-    required this.items,
-    required this.statusList,
-    required this.price,
-  });
+  OrderModel(
+      {required this.id,
+      required this.orderType,
+      required this.timestamp,
+      required this.items,
+      required this.statusList,
+      required this.deliveryFee,
+      required this.packagingFee,
+      this.price = 0.0});
 
+  double totalPrice() => (items.fold(
+          0.0, (previousValue, element) => previousValue + element.price) +
+      deliveryFee +
+      packagingFee);
+  // items
+  //                                       .fold(0.0,
+  //                                           (sum, item) => sum + item.price)
   OrderModel copyWith({
     String? id,
     OrderType? orderType,
     DateTime? timestamp,
     List<OrderItemModel>? items,
     List<OrderStatusModel>? statusList,
+    double? deliveryFee,
+    double? packagingFee,
     double? price,
   }) {
     return OrderModel(
@@ -42,6 +56,8 @@ class OrderModel {
       timestamp: timestamp ?? this.timestamp,
       items: items ?? this.items,
       statusList: statusList ?? this.statusList,
+      deliveryFee: deliveryFee ?? this.deliveryFee,
+      packagingFee: packagingFee ?? this.packagingFee,
       price: price ?? this.price,
     );
   }
@@ -53,6 +69,8 @@ class OrderModel {
       'timestamp': timestamp.millisecondsSinceEpoch,
       'items': items.map((x) => x.toMap()).toList(),
       'statusList': statusList.map((x) => x.toMap()).toList(),
+      'deliveryFee': deliveryFee,
+      'packagingFee': packagingFee,
       'price': price,
     };
   }
@@ -73,6 +91,8 @@ class OrderModel {
           (x) => OrderStatusModel.fromMap(x as Map<String, dynamic>),
         ),
       ),
+      deliveryFee: map['deliveryFee'] as double,
+      packagingFee: map['packagingFee'] as double,
       price: map['price'] as double,
     );
   }
@@ -84,7 +104,7 @@ class OrderModel {
 
   @override
   String toString() {
-    return 'OrderModel(id: $id, orderType: $orderType, timestamp: $timestamp, items: $items, statusList: $statusList, price: $price)';
+    return 'OrderModel(id: $id, orderType: $orderType, timestamp: $timestamp, items: $items, statusList: $statusList, deliveryFee: $deliveryFee, packagingFee: $packagingFee, price: $price)';
   }
 
   @override
@@ -96,6 +116,8 @@ class OrderModel {
         other.timestamp == timestamp &&
         listEquals(other.items, items) &&
         listEquals(other.statusList, statusList) &&
+        other.deliveryFee == deliveryFee &&
+        other.packagingFee == packagingFee &&
         other.price == price;
   }
 
@@ -106,6 +128,8 @@ class OrderModel {
         timestamp.hashCode ^
         items.hashCode ^
         statusList.hashCode ^
+        deliveryFee.hashCode ^
+        packagingFee.hashCode ^
         price.hashCode;
   }
 }

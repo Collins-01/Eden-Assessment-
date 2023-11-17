@@ -113,6 +113,8 @@ class OrderServiceImpl implements OrderService {
     _list = [
       OrderModel(
         price: 10000.00,
+        deliveryFee: 800,
+        packagingFee: 150,
         id: '2',
         orderType: OrderType.instant,
         timestamp: DateTime.now(),
@@ -151,6 +153,8 @@ class OrderServiceImpl implements OrderService {
       ),
       OrderModel(
         price: 10000.00,
+        deliveryFee: 800,
+        packagingFee: 150,
         id: '3',
         orderType: OrderType.instant,
         timestamp: DateTime.now(),
