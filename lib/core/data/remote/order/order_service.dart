@@ -1,14 +1,13 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:eden_demo/core/data/data.dart';
 import 'package:eden_demo/core/models/models.dart';
 import 'package:eden_demo/external_services/external_service.dart';
 import 'package:eden_demo/utils/utils.dart';
 import 'package:faker/faker.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:uuid/uuid.dart';
 
 class OrderServiceImpl implements OrderService {
   final _logger = appLogger(OrderServiceImpl);
@@ -17,7 +16,17 @@ class OrderServiceImpl implements OrderService {
   // ignore: non_constant_identifier_names
   String NEW_STATUS = 'new_status';
   final AblyService ablyService;
-  final _uuid = const Uuid();
+  //This is used soley for the purpose of the updating aand tracking the current status of the order.
+  final List<OrderStatus> _listOfStatus = [
+    OrderStatus.ORDER_PLACED,
+    OrderStatus.ORDER_ACCEPTED,
+    OrderStatus.ORDER_PICKUP_IN_PROGRESS,
+    OrderStatus.ORDER_ON_THE_WAY,
+    OrderStatus.ORDER_ARRIVED,
+    OrderStatus.ORDER_DELIVERED,
+  ];
+  int _currentStatusIndex = 0;
+  bool _isConnected = false;
   final _faker = Faker();
   List<OrderModel> _list = [];
   Timer? _timer;
@@ -25,21 +34,32 @@ class OrderServiceImpl implements OrderService {
       BehaviorSubject.seeded([]);
   OrderServiceImpl(this.ablyService) {
     _seedOrdersList();
-    _timer = Timer.periodic(const Duration(seconds: 5), (timer) {
+    /*
+    After `5` seconds of initializing the `OrderService`,a status update is sent to the server 
+    to update the status of the order, since the is no backend to controller the activity yet.
+    */
+    _timer = Timer.periodic(const Duration(seconds: 5), (timer) async {
+      _currentStatusIndex = _currentStatusIndex + 1;
+      _logger.d("_currentStatusIndex:: $_currentStatusIndex");
       final time = DateTime.now().add(const Duration(seconds: 3));
-      // _listenAndUpdateStatus('2', OrderStatus.ORDER_ACCEPTED);
-      ablyService.channel(ORDERS_CHANNEL).publish(name: NEW_STATUS, data: {
+      //increase the status index
+
+      await ablyService
+          .channel(ORDERS_CHANNEL)
+          .publish(name: NEW_STATUS, data: {
         'id': '2',
-        'status': OrderStatus.ORDER_ACCEPTED.name,
+        'status': _listOfStatus[_currentStatusIndex].name,
         'timestamp': time.toString(),
       });
-      _timer?.cancel();
+      if (_currentStatusIndex == _listOfStatus.length - 1) {
+        _timer?.cancel();
+      }
     });
     ablyService.connection.listen((event) {
       _logger.d("Connections Status ::: ${event.current.name}");
     });
 
-    /// Listens for new order status, and updates the status locally.
+    /// Listens for new order status, and updates the status on the list locally.
     ablyService
         .channel(ORDERS_CHANNEL)
         .subscribe(
@@ -139,11 +159,11 @@ class OrderServiceImpl implements OrderService {
         ],
         items: [
           ...List.generate(
-            3,
+            7,
             (index) => OrderItemModel(
-              id: _uuid.v4(),
+              id: _faker.guid.guid(),
               name: _faker.food.dish(),
-              price: 200,
+              price: 300,
               image: _faker.image.image(),
             ),
           )
@@ -181,7 +201,7 @@ class OrderServiceImpl implements OrderService {
           ...List.generate(
             3,
             (index) => OrderItemModel(
-              id: _uuid.v4(),
+              id: _faker.guid.guid(),
               name: _faker.food.dish(),
               price: 200,
               image: _faker.image.image(),

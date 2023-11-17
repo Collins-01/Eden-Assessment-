@@ -25,10 +25,10 @@ class AuthView extends ConsumerWidget {
                   callback: () => vm.signInWithGoogle(),
                 ),
                 Gap.h10,
-                AuthButton(
-                  title: "Continue with Github",
-                  callback: () => vm.signInWithGithub(),
-                ),
+                // AuthButton(
+                //   title: "Continue with Github",
+                //   callback: () => vm.signInWithGithub(),
+                // ),
               ],
             ),
           ),
