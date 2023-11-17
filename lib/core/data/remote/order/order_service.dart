@@ -5,7 +5,7 @@ import 'package:eden_demo/core/models/models.dart';
 import 'package:eden_demo/external_services/external_service.dart';
 import 'package:eden_demo/utils/utils.dart';
 import 'package:faker/faker.dart';
-import 'package:flutter/material.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -35,15 +35,15 @@ class OrderServiceImpl implements OrderService {
   OrderServiceImpl(this.ablyService) {
     _seedOrdersList();
     /*
-    After `5` seconds of initializing the `OrderService`,a status update is sent to the server 
+    After `10` seconds of initializing the `OrderService`,a status update is sent to the server 
     to update the status of the order, since the is no backend to controller the activity yet.
     */
     _timer = Timer.periodic(const Duration(seconds: 5), (timer) async {
       _currentStatusIndex = _currentStatusIndex + 1;
       _logger.d("_currentStatusIndex:: $_currentStatusIndex");
       final time = DateTime.now().add(const Duration(seconds: 3));
-      //increase the status index
-
+      //If there is a newtork connection, publish the status of the order
+      if (_isConnected) {}
       await ablyService
           .channel(ORDERS_CHANNEL)
           .publish(name: NEW_STATUS, data: {
@@ -55,6 +55,8 @@ class OrderServiceImpl implements OrderService {
         _timer?.cancel();
       }
     });
+
+    /// Check connection status is active
     ablyService.connection.listen((event) {
       _logger.d("Connections Status ::: ${event.current.name}");
     });
