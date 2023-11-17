@@ -24,8 +24,6 @@ class OrderServiceImpl implements OrderService {
   final BehaviorSubject<List<OrderModel>> _ordersList =
       BehaviorSubject.seeded([]);
   OrderServiceImpl(this.ablyService) {
-    /// Initialize the ably service
-    ablyService.init();
     _seedOrdersList();
     _timer = Timer.periodic(const Duration(seconds: 5), (timer) {
       final time = DateTime.now().add(const Duration(seconds: 3));
