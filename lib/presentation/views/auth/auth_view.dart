@@ -1,3 +1,4 @@
+import 'package:eden_demo/extensions/context_extension.dart';
 import 'package:eden_demo/presentation/views/auth/viewmodels/auth_viewmodel.dart';
 import 'package:eden_demo/presentation/widgets/widgets.dart';
 import 'package:eden_demo/utils/utils.dart';
@@ -18,8 +19,13 @@ class AuthView extends ConsumerWidget {
               EdgeInsets.symmetric(horizontal: SizingConfig.defaultPadding),
           child: Center(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              // mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                AppText.heading3("Hey there!, SignIn to continue..."),
+                Gap.h(
+                  context.deviceHeightPercentage(percentage: 40),
+                ),
                 AuthButton(
                   title: "Continue with Google",
                   callback: () => vm.signInWithGoogle(),

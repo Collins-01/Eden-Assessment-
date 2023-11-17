@@ -6,6 +6,13 @@
 
 The Realtime Order Application is a Flutter-based mobile app that allows users to experience a real-time order tracking system. The app leverages Ably for real-time communication, Firebase for authentication, and Riverpod for state management and dependency injection.
 
+
+## How it works
+The project is focused on simulating realtime updates. Since there is no active backend service or action to trigger the state of orders, I hard coded the flow by creating a timer to simulate the process of an action triggered by a backend service. Ably is used just to maintain the realtime functionality of the app. When the `OrderService` has been initialized, listeners will be created, and a method that updates the state of the order with new values every `10 seconds`, and whenever the order state has been completed, the timer gets cancelled. The callback listener from the timer that updates the state of the rorder will only be triggered when there is an active network connection, so as to avoid inconsistency with the status.
+To view the realtime updates, restart the application, and click on the first order item from the homepage, it should take you to the `OrderDetails` page where you can view realtime updates of the order, and you can also click `Track Order`  to view the complete order status in realtime. Note that the action is triggered every `10 seconds`, if there is a stable internet connection, and the order has not been completed. To review the process, you will have to restart the application.
+
+`NB: This only works for the first item in the order history, as there is not active backend to trigger such actions`
+
 ## Features
 
 - Real-time order updates using Ably
@@ -54,3 +61,4 @@ The Realtime Order Application is a Flutter-based mobile app that allows users t
 
 
 ## Screenshots
+
