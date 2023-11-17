@@ -38,7 +38,7 @@ class OrderServiceImpl implements OrderService {
     After `10` seconds of initializing the `OrderService`,a status update is sent to the server 
     to update the status of the order, since the is no backend to controller the activity yet.
     */
-    _timer = Timer.periodic(const Duration(seconds: 5), (timer) async {
+    _timer = Timer.periodic(const Duration(seconds: 10), (timer) async {
       _currentStatusIndex = _currentStatusIndex + 1;
       _logger.d("_currentStatusIndex:: $_currentStatusIndex");
       final time = DateTime.now().add(const Duration(seconds: 3));
