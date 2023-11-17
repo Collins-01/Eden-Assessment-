@@ -38,6 +38,9 @@ class AuthServiceImpl implements AuthService {
       _logger.d(
           "Google SignIn Response::: ${response.user?.email}|| ${response.user?.displayName}");
       return GoogleSignInResponseModel();
+    } on FirebaseAuthException catch (e) {
+      _logger.e("Error Signing in with Google ::: ${e.toString()}");
+      throw CustomError('', e.message ?? "An error occurred");
     } catch (e) {
       _logger.e("Error Signing in with Google ::: ${e.toString()}");
       throw CustomError('Unknown Error', e.toString());

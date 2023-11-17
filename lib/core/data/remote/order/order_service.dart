@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:ably_flutter/ably_flutter.dart';
 import 'package:eden_demo/core/data/data.dart';
 import 'package:eden_demo/core/models/models.dart';
 import 'package:eden_demo/external_services/external_service.dart';
@@ -34,31 +35,39 @@ class OrderServiceImpl implements OrderService {
       BehaviorSubject.seeded([]);
   OrderServiceImpl(this.ablyService) {
     _seedOrdersList();
+
+    /// Check connection status is active
+    ablyService.connection.listen((stateChange) {
+      _logger.d("Connections Status ::: ${stateChange.current.name}");
+      if (stateChange.current == ConnectionState.connected) {
+        _logger.d("Ably connectin is active...");
+        _isConnected = true;
+      } else {
+        _isConnected = false;
+        _logger.d("Ably has no internet connection...");
+      }
+    });
     /*
     After `10` seconds of initializing the `OrderService`,a status update is sent to the server 
     to update the status of the order, since the is no backend to controller the activity yet.
     */
     _timer = Timer.periodic(const Duration(seconds: 10), (timer) async {
-      _currentStatusIndex = _currentStatusIndex + 1;
-      _logger.d("_currentStatusIndex:: $_currentStatusIndex");
-      final time = DateTime.now().add(const Duration(seconds: 3));
       //If there is a newtork connection, publish the status of the order
-      if (_isConnected) {}
-      await ablyService
-          .channel(ORDERS_CHANNEL)
-          .publish(name: NEW_STATUS, data: {
-        'id': '2',
-        'status': _listOfStatus[_currentStatusIndex].name,
-        'timestamp': time.toString(),
-      });
-      if (_currentStatusIndex == _listOfStatus.length - 1) {
+      // && _currentStatusIndex < _listOfStatus.length
+      if (_isConnected) {
+        _currentStatusIndex = _currentStatusIndex + 1;
+        _logger.d("_currentStatusIndex:: $_currentStatusIndex");
+        final time = DateTime.now().add(const Duration(seconds: 3));
+        await ablyService
+            .channel(ORDERS_CHANNEL)
+            .publish(name: NEW_STATUS, data: {
+          'id': '2',
+          'status': _listOfStatus[_currentStatusIndex].name,
+          'timestamp': time.toString(),
+        });
+      } else {
         _timer?.cancel();
       }
-    });
-
-    /// Check connection status is active
-    ablyService.connection.listen((event) {
-      _logger.d("Connections Status ::: ${event.current.name}");
     });
 
     /// Listens for new order status, and updates the status on the list locally.
@@ -116,11 +125,11 @@ class OrderServiceImpl implements OrderService {
       // order.statusList.removeAt(statuIndex + 1);
       _timer?.cancel();
       final updatedOrder = order.copyWith(statusList: initailStatuses);
-      _logger.d("updated status list == ${order.statusList.toList()}");
+      // _logger.d("updated status list == ${order.statusList.toList()}");
       final list = _ordersList.value;
       list[index] = updatedOrder;
 
-      _logger.d("Stream list value: $list");
+      // _logger.d("Stream list value: $list");
       _ordersList.add(list);
       _logger.d("list has been updated..");
     } else {
